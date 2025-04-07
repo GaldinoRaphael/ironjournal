@@ -7,6 +7,8 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
+    "build-native-android": "eas build --platform android --profile development",
+    "build-native-ios": "eas build --platform ios --profile development",
     "test": "jest --watchAll",
     "lint": "expo lint"
   },
