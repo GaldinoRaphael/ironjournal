@@ -1,11 +1,11 @@
-export class Serie {
+export class WorkoutSet {
     constructor(
         public done: boolean,
         public preDefinedWeight: number,
         public preDefinedReps: number
     ) {}
     
-    static create(): Serie {
-        return new Serie(false, 0, 0);
+    static create(): WorkoutSet {
+        return new WorkoutSet(false, 0, 0);
     }
 }
