@@ -1,11 +1,29 @@
+import { generateUUID } from "../utils/uuid";
 import { WorkoutSet } from "./workoutSet";
 
 export class Exercise {
-    name: string;
-    series: WorkoutSet[];
+    id: string;
+    done: boolean = false;
 
-    constructor(name: string, series: WorkoutSet[]) {
+    constructor(public name: string, public workoutSets: WorkoutSet[]) {
+        this.id = generateUUID().substring(2, 15);
         this.name = name;
-        this.series = series;
+        this.workoutSets = workoutSets;
+    }
+
+    toggleDone() {
+        this.done = !this.done;
+    }
+
+    checkExerciseDone() {
+        const workoutSetsDone = this.checkAllWorkoutSetDone();
+        
+        if(workoutSetsDone) {
+            this.done = true;
+        }
+    }
+
+    private checkAllWorkoutSetDone() {
+        return this.workoutSets.every((workoutSet) => workoutSet.workoutSetDone());
     }
 }

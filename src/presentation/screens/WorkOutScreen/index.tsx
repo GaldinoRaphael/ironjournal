@@ -1,45 +1,19 @@
-import React, { useState } from "react";
-import { FlatList, ScrollView, Text, TextInput, View } from 'react-native';
-import Checkbox from 'expo-checkbox';
-import WorkoutSetList from "../../components/WorkoutSetList";
+import React from "react";
+import { ScrollView } from 'react-native';
 import ExerciseList from "../../components/ExerciseList";
+import { Exercise } from "@/src/domain/exercise";
+import { WorkoutSet } from "@/src/domain/workoutSet";
 
-const exercises = [
-    {
-        name: 'Supino',
-        series: [
-            {
-                done: false,
-                preDefinedWeight: 40,
-                preDefinedReps: 10,
-            },
-            {
-                done: false,
-                preDefinedWeight: 40,
-                preDefinedReps: 10,
-            },
-        ]
-    },
-    {
-        name: 'Agachamento',
-        series: [
-            {
-                done: false,
-                preDefinedWeight: 40,
-                preDefinedReps: 10,
-            },
-            {
-                done: false,
-                preDefinedWeight: 40,
-                preDefinedReps: 10,
-            },
-            {
-                done: false,
-                preDefinedWeight: 40,
-                preDefinedReps: 10,
-            },
-        ]
-    },
+const exercises: Exercise[] = [
+    new Exercise('Supino', [
+        new WorkoutSet(false, 40, 10),
+        new WorkoutSet(false, 40, 10),
+    ]),
+    new Exercise('Agachamento', [
+        new WorkoutSet(false, 40, 10),
+        new WorkoutSet(false, 40, 10),
+        new WorkoutSet(false, 40, 10),
+    ]),
 
 ]
 

@@ -5,14 +5,21 @@ import WorkoutSetItem from "../WorkoutSetItem";
 
 type SetListPropsType = {
     workoutSets: WorkoutSet[];
+    onUpdate: (workoutSet: WorkoutSet) => void;
 }
 
-const WorkoutSetList = ({workoutSets: workoutSets}: SetListPropsType) => {
+const WorkoutSetList = ({ workoutSets: workoutSets, onUpdate }: SetListPropsType) => {
     return (
         <FlatList
+            style={{ marginBottom: 10 }}
             data={workoutSets}
             renderItem={({ item: workoutSet, index }) =>
-                <WorkoutSetItem key={index} workoutSet={workoutSet} index={index} />
+                <WorkoutSetItem
+                    key={workoutSet.id}
+                    workoutSet={workoutSet}
+                    index={index}
+                    onUpdateItem={(updatedSet) => onUpdate(updatedSet)}
+                />
             } />
     )
 }
