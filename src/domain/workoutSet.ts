@@ -5,15 +5,15 @@ export class WorkoutSet {
 
     constructor(
         private done: boolean,
-        public preDefinedWeight: number,
-        public preDefinedReps: number
+        public preDefinedWeight: string,
+        public preDefinedReps: string
     ) {
         this.id = generateUUID().substring(2, 15);
     }
 
 
     static create(): WorkoutSet {
-        return new WorkoutSet(false, 0, 0);
+        return new WorkoutSet(false, '0', '0');
     }
 
     toggleDone = (): void => {

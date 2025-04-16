@@ -6,13 +6,13 @@ import { WorkoutSet } from "@/src/domain/workoutSet";
 
 const exercises: Exercise[] = [
     new Exercise('Supino', [
-        new WorkoutSet(false, 40, 10),
-        new WorkoutSet(false, 40, 10),
+        new WorkoutSet(false, '40', '10'),
+        new WorkoutSet(false, '40', '10'),
     ]),
     new Exercise('Agachamento', [
-        new WorkoutSet(false, 40, 10),
-        new WorkoutSet(false, 40, 10),
-        new WorkoutSet(false, 40, 10),
+        new WorkoutSet(false, '40', '10'),
+        new WorkoutSet(false, '40', '10'),
+        new WorkoutSet(false, '40', '10'),
     ]),
 
 ]

@@ -16,14 +16,12 @@ const WorkoutSetItem = ({ workoutSet, index, onUpdateItem }: SetItemPropsType) =
     }
 
     const changeWeight = (value: string) => {
-        const weight = parseFloat(value);
-        workoutSet.preDefinedWeight = weight;
+        workoutSet.preDefinedWeight = value;
         onUpdateItem(workoutSet);
     }
 
     const changeReps = (value: string) => {
-        const reps = parseFloat(value);
-        workoutSet.preDefinedWeight = reps;
+        workoutSet.preDefinedWeight = value;
         onUpdateItem(workoutSet);
     }
 
