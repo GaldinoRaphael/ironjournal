@@ -9,14 +9,13 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 
 export const handleLogin = async (req: any, res: any) => {
-    const { username, pwd } = req.body;
+    const { email, pwd } = req.body;
 
-    if (!username || !pwd) return res.status(400).json({ 'message': 'Usuário e Senha são obrigatórios' });
+    if (!email || !pwd) return res.status(400).json({ 'message': 'Usuário e Senha são obrigatórios' });
 
     try {
-        const foundUser: User = usersDB.users.find((user: User) => user.username === username);
-        console.log('found user', foundUser)
-        console.log('__________')
+        const foundUser: User = usersDB.users.find((user: User) => user.email === email);
+
         if(!foundUser){
             return res.sendStatus(401);
         }
@@ -24,7 +23,7 @@ export const handleLogin = async (req: any, res: any) => {
 
         if(match){
             //TO-DO Criar JWT
-            return res.json({'success': `Usurário ${JSON.stringify(username)}! está logado`})
+            return res.json({'success': `Usurário ${JSON.stringify(foundUser.username)}! está logado`})
         }
 
         return res.sendStatus(401);
