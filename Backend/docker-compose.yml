@@ -4,12 +4,13 @@ services:
     ports:
       - '5432:5432'
     environment:
-      - POSTGRES_USER=docker
-      - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=ironjournal
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=123456
+      - POSTGRESQL_DATABASE=ironjournal
+      - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256
     volumes:
       - ironjournal_pg_data:/bitnami/postgresql
-      - ./database/create.sql:/docker-entrypoint-initdb.d/create.sql
+      - ./create.sql:/docker-entrypoint-initdb.d/create.sql
 
 volumes:
   ironjournal_pg_data:

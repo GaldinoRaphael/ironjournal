@@ -1,11 +1,10 @@
-import { User } from "./domain/user";
-import RegisterDAO from "./RegisterDAO";
-
+import User from "../../domain/User";
+import RegisterRepository from "../../RegisterDAO";
 
 const bcrypt = require('bcrypt');
 
 export default class Register {
-    constructor(readonly registerDAO: RegisterDAO){}
+    constructor(readonly registerDAO: RegisterRepository){}
 
     private async isDuplicatedUser(input: any) {
         const users = await this.registerDAO.getUsers();

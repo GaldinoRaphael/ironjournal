@@ -1,20 +1,19 @@
-import { Request, Response } from "express";
-
-import CreateExercise from "./CreateExercise";
-import Login from "./Login";
-import Register from "./Register";
-import { RegisterDAODatabase } from "./RegisterDAO";
-import { ExerciseDAODatabase } from "./ExerciseDAO";
+import { RegisterRepositoryMemory } from "./RegisterDAO";
+import { ExerciseRepositoryDatabase } from "./infra/repository/ExerciseRepository";
 import HttpServer, { ExpressHttpServer } from "./infra/http/HttpServer";
 import AuthController from "./infra/controller/AuthController";
 import ExerciseController from "./infra/controller/ExerciseController";
+import CreateExercise from "./application/useCase/CreateExercise";
+import Login from "./application/useCase/Login";
+import Register from "./application/useCase/Register";
+import DatabaseConnection, { PgPromisseAdapter } from './infra/database/DatabaseConnection';
 
-const exerciseDAO = new ExerciseDAODatabase();
+// const exerciseDAO = new ExerciseDAOMemory();
+const databaseConnection = new PgPromisseAdapter();
+const exerciseDAO = new ExerciseRepositoryDatabase(databaseConnection);
 const createExercise = new CreateExercise(exerciseDAO);
-
-const login = new Login();
-
-const registerDAO = new RegisterDAODatabase();
+const registerDAO = new RegisterRepositoryMemory();
+const login = new Login(registerDAO);
 const register = new Register(registerDAO);
 
 const httpServer: HttpServer = new ExpressHttpServer();

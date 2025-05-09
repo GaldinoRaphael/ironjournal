@@ -1,4 +1,4 @@
-import CreateExercise from "../../CreateExercise";
+import CreateExercise from "../../application/useCase/CreateExercise";
 import HttpServer from "../http/HttpServer";
 
 export default class ExerciseController{

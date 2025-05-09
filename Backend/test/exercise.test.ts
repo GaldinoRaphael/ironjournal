@@ -1,27 +1,45 @@
 import axios from "axios"
+import DatabaseConnection, { PgPromisseAdapter } from "../src/infra/database/DatabaseConnection";
+import CreateExercise from "../src/application/useCase/CreateExercise";
+import ExerciseRepository, { ExerciseRepositoryDatabase } from "../src/infra/repository/ExerciseRepository";
 
 axios.defaults.validateStatus = () => true;
 
 describe('Exercícios', () => {
+    let databaseConnection: DatabaseConnection;
+    let exerciseRepository: ExerciseRepository;
+    let createExercise: CreateExercise;
+
+    beforeEach(() => {
+        databaseConnection = new PgPromisseAdapter();
+        exerciseRepository = new ExerciseRepositoryDatabase(databaseConnection);
+        exerciseRepository.deleteAll();
+        createExercise = new CreateExercise(exerciseRepository);
+    });
+
     test('Deve criar um exercício', async () =>{
         const exercise = {
             name: 'Supino'
         }
 
-        const response = await axios.post('http://localhost:3000/exercise', exercise);
+        const response = await createExercise.execute(exercise);
 
-        expect(response.status).toBe(200);
+        expect(response.name).toBeDefined();
+        expect(response.id).toBeDefined();
     })
 
     
     test('Não deve criar um exercício duplicado', async () =>{
         const exercise = {
-            name: 'Supino'
+            name: 'Agachamento'
         }
 
-        const response = await axios.post('http://localhost:3000/exercise', exercise);
+        await createExercise.execute(exercise);
 
-        expect(response.status).toBe(422);
-        expect(response.data.error).toBe('Exercício já cadastrado');
+        expect(createExercise.execute(exercise)).rejects.toThrow('Exercício já cadastrado');
+    })
+
+    afterEach(async () => {
+        databaseConnection.close()
     })
 })

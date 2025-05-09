@@ -1,16 +1,16 @@
+import { Exercise } from "../../domain/Exercise";
+import ExerciseRepository from "../../infra/repository/ExerciseRepository";
 
-import ExerciseDAO from "./ExerciseDAO";
-import { Exercise } from "./domain/Exercise";
 
 export default class CreateExercise {
-    constructor(readonly exerciseDAO: ExerciseDAO){};
+    constructor(readonly exerciseRepository: ExerciseRepository){};
 
     private exerciseExist(exercises: Exercise[], input: any) {
         return exercises.find(exercise => exercise.name == input.name.toLowerCase());
     }
 
-    async execute(input: any): Promise<any>{;
-        const exercises = await this.exerciseDAO.getExercises();
+    async execute(input: any): Promise<Exercise>{;
+        const exercises = await this.exerciseRepository.getExercises();
     
         if(this.exerciseExist(exercises, input)) throw new Error("Exercício já cadastrado");
 
@@ -18,7 +18,7 @@ export default class CreateExercise {
             input.name,
         )
     
-        await this.exerciseDAO.createExercise(exercise);
+        await this.exerciseRepository.createExercise(exercise);
 
         return exercise;
     }

@@ -1,26 +1,24 @@
-import { User } from "./domain/user";
 
-
-const usersDB = {
-    users: require('../users.json'),
-}
+import User from "../../domain/User";
+import RegisterRepository from "../../RegisterDAO";
 
 const bcrypt = require('bcrypt');
 
 export default class Login {
 
-    private userExist(email: string) {
-        return usersDB.users.find((user: User) => user.email === email);
+    constructor(readonly registerDAO: RegisterRepository){}
+
+    private async userExist(email: string) {
+        const users = await this.registerDAO.getUsers();
+        return users.find((user: User) => user.email === email);
     }
 
     async execute(input: Input) {
         if (!input.email || !input.pwd) throw Error('Usuário e Senha são obrigatórios');
 
-        const foundUser = this.userExist(input.email);
+        const foundUser = await this.userExist(input.email);
 
-        if (!foundUser) {
-            throw Error();
-        }
+        if (!foundUser) throw Error();
 
         const match = await bcrypt.compare(input.pwd, foundUser.password);
 

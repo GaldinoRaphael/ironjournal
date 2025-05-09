@@ -6,7 +6,7 @@ export class Exercise {
         }
 
     static create(name: string){
-        const exerciseId = crypto.randomUUID().slice(0, 4);
+        const exerciseId = crypto.randomUUID();
         const exerciseName = name.toLowerCase();
 
         return new Exercise(exerciseId, exerciseName);

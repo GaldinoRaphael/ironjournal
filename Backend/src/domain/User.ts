@@ -1,4 +1,4 @@
-export class User {
+export default class User {
     constructor(
         public id: string,
         public username: string,
@@ -14,7 +14,7 @@ export class User {
         password: string,
         email: string,
     ){
-        const userId = crypto.randomUUID().slice(0, 8);
+        const userId = crypto.randomUUID();
         return new User(userId, username, password, email)
     }
 

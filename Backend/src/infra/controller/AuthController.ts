@@ -1,5 +1,5 @@
-import Login from "../../Login";
-import Register from "../../Register";
+import Login from "../../application/useCase/Login";
+import Register from "../../application/useCase/Register";
 import HttpServer from "../http/HttpServer";
 
 export default class AuthController {
