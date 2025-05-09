@@ -8,7 +8,12 @@ const usersDB = {
     setUsers: function (data: User[]) { this.users = data; },
 }
 
-export default class RegisterDAO {
+export default interface RegisterDAO {
+    saveUser(newUser: User): Promise<void>;
+    getUsers(): Promise<User[]>;
+}
+
+export class RegisterDAODatabase implements RegisterDAO {
     async saveUser(newUser: User) {
         usersDB.setUsers([...usersDB.users, newUser]);
         await fsPromises.writeFile(

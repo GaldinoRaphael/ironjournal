@@ -1,21 +1,21 @@
 import express, {Request, Response} from "express";
 import cors from "cors";
-import { ExerciseDAO } from "./ExerciseDAO";
 import CreateExercise from "./CreateExercise";
 import Login from "./Login";
 import Register from "./Register";
-import RegisterDAO from "./RegisterDAO";
+import { RegisterDAODatabase } from "./RegisterDAO";
+import { ExerciseDAODatabase } from "./ExerciseDAO";
 
 const app = express();
 app.use(express.json());
 app.use(cors())
 
-const exerciseDAO = new ExerciseDAO();
+const exerciseDAO = new ExerciseDAODatabase();
 const createExercise = new CreateExercise(exerciseDAO);
 
 const login = new Login();
 
-const registerDAO = new RegisterDAO();
+const registerDAO = new RegisterDAODatabase();
 const register = new Register(registerDAO);
 
 app.post('/register', async (req: Request, res: Response) => {

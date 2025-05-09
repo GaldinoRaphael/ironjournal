@@ -1,6 +1,7 @@
 import { User } from "./model/user";
 import RegisterDAO from "./RegisterDAO";
 
+
 const bcrypt = require('bcrypt');
 
 export default class Register {

@@ -9,7 +9,13 @@ const exercisesDB = {
     setExercises: function (data: Exercise[]) { this.exercises = data; },
 }
 
-export class ExerciseDAO {
+export default interface ExerciseDAO {
+    createExercise(exercise: Exercise) : Promise<void>;
+    getExercises() : Promise <Exercise[]>;
+}
+
+
+export class ExerciseDAODatabase implements ExerciseDAO  {
     async createExercise(exercise: Exercise){
         exercisesDB.setExercises( [...exercisesDB.exercises, exercise])
         await fsPromises.writeFile(

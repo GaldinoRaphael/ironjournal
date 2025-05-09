@@ -1,5 +1,5 @@
 
-import { ExerciseDAO } from "./ExerciseDAO";
+import ExerciseDAO from "./ExerciseDAO";
 import { Exercise } from "./model/Exercise";
 
 export default class CreateExercise {
