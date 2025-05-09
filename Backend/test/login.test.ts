@@ -22,6 +22,6 @@ describe('Login', () => {
 
         const response = await axios.post('http://localhost:3000/login', userData);
 
-        expect(response.status).toBe(401);
+        expect(response.status).toBe(422);
     })
 })

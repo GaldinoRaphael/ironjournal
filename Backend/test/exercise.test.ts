@@ -22,6 +22,6 @@ describe('Exercícios', () => {
         const response = await axios.post('http://localhost:3000/exercise', exercise);
 
         expect(response.status).toBe(422);
-        expect(response.data.message).toBe('Exercício já cadastrado');
+        expect(response.data.error).toBe('Exercício já cadastrado');
     })
 })

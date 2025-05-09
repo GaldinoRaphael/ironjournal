@@ -9,7 +9,6 @@ const exercisesDB = {
     setExercises: function (data: Exercise[]) { this.exercises = data; },
 }
 
-
 export class ExerciseDAO {
     async createExercise(exercise: Exercise){
         exercisesDB.setExercises( [...exercisesDB.exercises, exercise])

@@ -1,8 +1,32 @@
-import express from "express"
-import { handleLogin } from "./loginController";
+import { User } from "./model/user";
 
-const router = express.Router();
+const usersDB = {
+    users: require('../users.json'),
+}
 
-router.post('/', handleLogin);
+const bcrypt = require('bcrypt');
 
-export default router;
+export default class Login {
+
+    private userExist(email: string) {
+        return usersDB.users.find((user: User) => user.email === email);
+    }
+
+    async execute(input: any) {
+        if (!input.email || !input.pwd) throw Error('Usuário e Senha são obrigatórios');
+
+        const foundUser = this.userExist(input.email);
+
+        if (!foundUser) {
+            throw Error();
+        }
+
+        const match = await bcrypt.compare(input.pwd, foundUser.password);
+
+        if (match) {
+            //TO-DO Criar JWT
+            return `Usuário ${JSON.stringify(foundUser.username)}! está logado`;
+        }
+    }
+
+}
