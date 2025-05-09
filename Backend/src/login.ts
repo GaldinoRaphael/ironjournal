@@ -1,4 +1,5 @@
-import { User } from "./model/user";
+import { User } from "./domain/user";
+
 
 const usersDB = {
     users: require('../users.json'),
@@ -12,7 +13,7 @@ export default class Login {
         return usersDB.users.find((user: User) => user.email === email);
     }
 
-    async execute(input: any) {
+    async execute(input: Input) {
         if (!input.email || !input.pwd) throw Error('Usuário e Senha são obrigatórios');
 
         const foundUser = this.userExist(input.email);
@@ -29,4 +30,10 @@ export default class Login {
         }
     }
 
+}
+
+type Input = {
+    username: string,
+    email: string,
+    pwd: string,
 }

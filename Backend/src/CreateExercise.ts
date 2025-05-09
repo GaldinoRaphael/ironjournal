@@ -1,6 +1,6 @@
 
 import ExerciseDAO from "./ExerciseDAO";
-import { Exercise } from "./model/Exercise";
+import { Exercise } from "./domain/Exercise";
 
 export default class CreateExercise {
     constructor(readonly exerciseDAO: ExerciseDAO){};
@@ -10,19 +10,13 @@ export default class CreateExercise {
     }
 
     async execute(input: any): Promise<any>{;
-        if(!input.name) throw new Error("Nome inválido");
-    
         const exercises = await this.exerciseDAO.getExercises();
     
         if(this.exerciseExist(exercises, input)) throw new Error("Exercício já cadastrado");
-        
-    
-        const id = crypto.randomUUID().slice(0, 4);
-    
-        const exercise: Exercise = {
-            id: id,
-            name : input.name.toLowerCase()
-        };
+
+        const exercise = Exercise.create(
+            input.name,
+        )
     
         await this.exerciseDAO.createExercise(exercise);
 

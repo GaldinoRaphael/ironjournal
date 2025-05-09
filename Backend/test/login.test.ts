@@ -5,9 +5,12 @@ axios.defaults.validateStatus = () => true;
 describe('Login', () => {
     test('Deve realizar o login', async () => {
         const userData = {
+            username: 'Raphael Galdino',
             email: 'rapha@mail',
             pwd: '123456'
         }
+
+        await axios.post('http://localhost:3000/register', userData);
 
         const response = await axios.post('http://localhost:3000/login', userData);
 

@@ -1,4 +1,4 @@
-import { User } from "./model/user";
+import { User } from "./domain/user";
 
 const fsPromises = require('fs').promises;
 const path = require('path');

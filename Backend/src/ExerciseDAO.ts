@@ -1,4 +1,4 @@
-import { Exercise } from "./model/Exercise";
+import { Exercise } from "./domain/Exercise";
 
 const fsPromises = require('fs').promises;
 const path = require('path');
