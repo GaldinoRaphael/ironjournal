@@ -1,4 +1,4 @@
-import { RegisterRepositoryMemory } from "./RegisterDAO";
+import { RegisterRepositoryMemory } from "./infra/repository/RegisterRepository";
 import { ExerciseRepositoryDatabase } from "./infra/repository/ExerciseRepository";
 import HttpServer, { ExpressHttpServer } from "./infra/http/HttpServer";
 import AuthController from "./infra/controller/AuthController";

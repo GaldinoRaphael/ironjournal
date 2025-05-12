@@ -1,26 +1,26 @@
 
 import User from "../../domain/User";
-import RegisterRepository from "../../RegisterDAO";
+import RegisterRepository from "../../infra/repository/RegisterRepository";
 
 const bcrypt = require('bcrypt');
 
 export default class Login {
 
-    constructor(readonly registerDAO: RegisterRepository){}
+    constructor(readonly registerRepository: RegisterRepository){}
 
     private async userExist(email: string) {
-        const users = await this.registerDAO.getUsers();
-        return users.find((user: User) => user.email === email);
+        const user = await this.registerRepository.findUserByEmail(email);
+        return user;
     }
 
     async execute(input: Input) {
-        if (!input.email || !input.pwd) throw Error('Usuário e Senha são obrigatórios');
+        if (!input.email || !input.password) throw Error('Usuário e Senha são obrigatórios');
 
         const foundUser = await this.userExist(input.email);
 
         if (!foundUser) throw Error();
 
-        const match = await bcrypt.compare(input.pwd, foundUser.password);
+        const match = await bcrypt.compare(input.password, foundUser.password);
 
         if (match) {
             //TO-DO Criar JWT
@@ -33,5 +33,5 @@ export default class Login {
 type Input = {
     username: string,
     email: string,
-    pwd: string,
+    password: string,
 }

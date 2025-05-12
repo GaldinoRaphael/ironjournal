@@ -1,30 +1,34 @@
 import User from "../../domain/User";
-import RegisterRepository from "../../RegisterDAO";
+import RegisterRepository from "../../infra/repository/RegisterRepository";
 
 const bcrypt = require('bcrypt');
 
 export default class Register {
-    constructor(readonly registerDAO: RegisterRepository){}
+    constructor(private readonly registerRepository: RegisterRepository){}
 
     private async isDuplicatedUser(input: any) {
-        const users = await this.registerDAO.getUsers();
+        const users = await this.registerRepository.getUsers();
         return users.find((person: any) => person.email === input.email);
     }
 
-    async execute(input: any) {
+    async execute(input: Input) {
         const duplicated = await this.isDuplicatedUser(input);
 
         if (duplicated) return Error();
 
-        const hashedPwd = await bcrypt.hash(input.pwd, 10);
+        const hashedPwd = await bcrypt.hash(input.password, 10);
 
         const newUser = User.create(input.username, hashedPwd, input.email);
         
-        await this.registerDAO.saveUser(newUser);
+        await this.registerRepository.saveUser(newUser);
         
-        return `Novo usuário ${input.username} criado!`;
+        return newUser;
     }
 
 }
 
-
+type Input = {
+    username: string,
+    password: string,
+    email: string
+}
