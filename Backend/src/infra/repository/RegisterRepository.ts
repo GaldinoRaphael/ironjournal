@@ -12,7 +12,8 @@ import DatabaseConnection from "../database/DatabaseConnection";
 export default interface RegisterRepository {
     saveUser(newUser: User): Promise<void>;
     getUsers(): Promise<User[]>;
-    findUserByEmail(email: string): Promise<User>
+    findUserByEmail(email: string): Promise<User>;
+    deleteAllUsers(): Promise<void>;
 }
 
 // export class RegisterRepositoryMemory implements RegisterRepository {
@@ -57,6 +58,10 @@ export class RegisterRepositoryDatabase implements RegisterRepository{
         [...usersData].forEach(userData => users.push(new User(userData.user_id, userData.name, userData.password, userData.email)));
 
         return users;
+    }
+
+    async deleteAllUsers(): Promise<void>{
+        return this.databaseConnection.query("delete from ironjournal.user", []);
     }
 
 }

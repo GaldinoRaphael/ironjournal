@@ -11,10 +11,10 @@ export default class Register {
         return users.find((person: any) => person.email === input.email);
     }
 
-    async execute(input: Input) {
+    async execute(input: Input): Promise<User> {
         const duplicated = await this.isDuplicatedUser(input);
 
-        if (duplicated) return Error();
+        if (duplicated) throw new Error();
 
         const hashedPwd = await bcrypt.hash(input.password, 10);
 

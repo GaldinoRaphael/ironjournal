@@ -17,6 +17,14 @@ Realiza o login na plataforma
 ## Cria Exercicio
 Realiza o cadastro do exercício
 
+## Cria um Treino
+Realiza o cadastro de um treino
+Um treino deve conter um nome
+Deve ser possível inserir multiplos exercícios em um treino
+Deve ser possível adicionar número de sets de exercícios
+Deve ser possível adicionar número de repetições por exercício
+
+
 **Input**: Nome
 **Output**: Id, Nome
 
@@ -31,16 +39,35 @@ Regra:
 
 create schema ironjournal;
 
-create table ironjournal.user {
-    email text,
-    name text,
-    password text
-    primary key (email)
-}
+create table ironjournal.user (
+    user_id uuid primary key,
+    email text not null,
+    name text not null,
+    password text not null
+);
 
+create table ironjournal.exercise (
+    exercise_id uuid primary key,
+    name text not null
+);
 
-create table ironjournal.exercise {
-    id numeric,
-    name text,
-    primary key (id)
+create table ironjournal.training_sheet (
+    training_sheet_id uuid primary key,
+    name text not null
+)
+
+create table ironjournal.workout (
+    workout_id uuid primary key,
+    user_id uuid NOT NULL REFERENCES user(user_id),
+    name text not null,
+    description text,
+)
+
+create table ironjournal.workout_set{
+    workout_set_id uuid primary key,
+    workout_id uuid NOT NULL REFERENCES workout(workout_id) ON DELETE CASCADE,
+    exercise_id uuid NOT NULL REFERENCES exercise(exercise_id),
+    weight integer,
+    reps integer,
+    type string
 }
