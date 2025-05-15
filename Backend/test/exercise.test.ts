@@ -10,19 +10,15 @@ describe('Exercícios', () => {
     let exerciseRepository: ExerciseRepository;
     let createExercise: CreateExercise;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         databaseConnection = new PgPromisseAdapter();
         exerciseRepository = new ExerciseRepositoryDatabase(databaseConnection);
-        exerciseRepository.deleteAll();
+        await exerciseRepository.deleteAll();
         createExercise = new CreateExercise(exerciseRepository);
     });
 
     test('Deve criar um exercício', async () =>{
-        const exercise = {
-            name: 'Supino'
-        }
-
-        const response = await createExercise.execute(exercise);
+        const response = await createExercise.execute('Remada Curvada');
 
         expect(response.name).toBeDefined();
         expect(response.id).toBeDefined();
@@ -30,13 +26,9 @@ describe('Exercícios', () => {
 
     
     test('Não deve criar um exercício duplicado', async () =>{
-        const exercise = {
-            name: 'Agachamento'
-        }
+        await createExercise.execute('Agachamento');
 
-        await createExercise.execute(exercise);
-
-        expect(createExercise.execute(exercise)).rejects.toThrow('Exercício já cadastrado');
+        expect(createExercise.execute('Agachamento')).rejects.toThrow('Exercício já cadastrado');
     })
 
     afterEach(async () => {

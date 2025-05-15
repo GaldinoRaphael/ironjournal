@@ -67,7 +67,7 @@ create table ironjournal.workout_set{
     workout_set_id uuid primary key,
     workout_id uuid NOT NULL REFERENCES workout(workout_id) ON DELETE CASCADE,
     exercise_id uuid NOT NULL REFERENCES exercise(exercise_id),
-    weight integer,
+    load integer,
     reps integer,
     type string
 }

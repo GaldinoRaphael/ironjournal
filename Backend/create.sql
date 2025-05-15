@@ -16,19 +16,21 @@ create table ironjournal.training_sheet (
     training_sheet_id uuid primary key,
     name text not null
 );
-
-create table ironjournal.workout (
-    workout_id uuid primary key,
-    user_id uuid NOT NULL REFERENCES ironjournal.user(user_id),
-    name text not null,
-    description text
+CREATE TABLE ironjournal.workout (
+    workout_id UUID PRIMARY KEY,
+    user_id UUID NOT NULL,
+    name TEXT NOT NULL,
+    description TEXT,
+    FOREIGN KEY (user_id) REFERENCES ironjournal.user(user_id) ON DELETE CASCADE
 );
 
-create table ironjournal.workout_set (
-    workout_set_id uuid primary key,
-    workout_id uuid NOT NULL REFERENCES ironjournal.workout(workout_id) ON DELETE CASCADE,
-    exercise_id uuid NOT NULL REFERENCES ironjournal.exercise(exercise_id),
-    weight integer,
-    reps integer,
-    type text
+CREATE TABLE ironjournal.workout_set (
+    workout_set_id UUID PRIMARY KEY,
+    workout_id UUID NOT NULL,
+    exercise_id UUID NOT NULL,
+    load INTEGER,
+    reps INTEGER,
+    type TEXT,
+    FOREIGN KEY (workout_id) REFERENCES ironjournal.workout(workout_id) ON DELETE CASCADE,
+    FOREIGN KEY (exercise_id) REFERENCES ironjournal.exercise(exercise_id)
 );

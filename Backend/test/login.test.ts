@@ -13,9 +13,10 @@ describe('Login', () => {
     let register: Register;
     let login: Login;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         databaseConnection = new PgPromisseAdapter();
         registerRepository = new RegisterRepositoryDatabase(databaseConnection);
+        await registerRepository.deleteAllUsers();
         register = new Register(registerRepository);
         login = new Login(registerRepository);
     })
@@ -24,7 +25,7 @@ describe('Login', () => {
     test('Deve realizar o login', async () => {
         const userData = {
             username: 'Raphael Galdino',
-            email: 'rapha@mail',
+            email: 'rapha2@mail',
             password: '123456'
         }
 

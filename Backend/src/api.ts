@@ -1,4 +1,4 @@
-import { RegisterRepositoryMemory } from "./infra/repository/RegisterRepository";
+
 import { ExerciseRepositoryDatabase } from "./infra/repository/ExerciseRepository";
 import HttpServer, { ExpressHttpServer } from "./infra/http/HttpServer";
 import AuthController from "./infra/controller/AuthController";
@@ -7,12 +7,13 @@ import CreateExercise from "./application/useCase/CreateExercise";
 import Login from "./application/useCase/Login";
 import Register from "./application/useCase/Register";
 import DatabaseConnection, { PgPromisseAdapter } from './infra/database/DatabaseConnection';
+import { RegisterRepositoryDatabase } from "./infra/repository/RegisterRepository";
 
 // const exerciseDAO = new ExerciseDAOMemory();
 const databaseConnection = new PgPromisseAdapter();
 const exerciseDAO = new ExerciseRepositoryDatabase(databaseConnection);
 const createExercise = new CreateExercise(exerciseDAO);
-const registerDAO = new RegisterRepositoryMemory();
+const registerDAO = new RegisterRepositoryDatabase(databaseConnection);
 const login = new Login(registerDAO);
 const register = new Register(registerDAO);
 

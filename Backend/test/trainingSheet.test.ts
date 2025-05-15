@@ -1,4 +1,5 @@
 import CreatePlaningSheet from "../src/application/useCase/CreatePlaningSheet";
+import TrainingSheet from "../src/domain/TrainingSheet";
 import TrainingSheetRepository, { TrainingSheetRepositoryDatabase } from "../src/infra/repository/TrainingSheetRepository";
 import DatabaseConnection, { PgPromisseAdapter } from './../src/infra/database/DatabaseConnection';
 
@@ -15,9 +16,7 @@ describe(('Planilha de treino'), () => {
     })
 
     test('Deve criar planilha de treino', async () => {
-        const planilha = {
-            name: 'Strong lift'
-        }
+        const planilha = TrainingSheet.create('Strong lift');
     
         const response  = await createPlaningSheet.execute(planilha);
     

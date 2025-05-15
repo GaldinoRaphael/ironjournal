@@ -5,18 +5,16 @@ import ExerciseRepository from "../../infra/repository/ExerciseRepository";
 export default class CreateExercise {
     constructor(readonly exerciseRepository: ExerciseRepository){};
 
-    private exerciseExist(exercises: Exercise[], input: any) {
-        return exercises.find(exercise => exercise.name == input.name.toLowerCase());
+    private exerciseExist(exercises: Exercise[], name: string) {
+        return exercises.find(exercise => exercise.name.toLowerCase() == name.toLowerCase());
     }
 
-    async execute(input: any): Promise<Exercise>{;
+    async execute(name: string): Promise<Exercise>{;
         const exercises = await this.exerciseRepository.getExercises();
     
-        if(this.exerciseExist(exercises, input)) throw new Error("Exercício já cadastrado");
+        if(this.exerciseExist(exercises, name)) throw new Error("Exercício já cadastrado");
 
-        const exercise = Exercise.create(
-            input.name,
-        )
+        const exercise = Exercise.create(name);
     
         await this.exerciseRepository.createExercise(exercise);
 

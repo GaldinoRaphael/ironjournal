@@ -9,16 +9,17 @@ describe('Register', () => {
     let registerRepository: RegisterRepository;
     let register: Register;
 
-    beforeEach(()=> {
+    beforeEach(async ()=> {
         databaseConnection = new PgPromisseAdapter();
         registerRepository = new RegisterRepositoryDatabase(databaseConnection);
+        await registerRepository.deleteAllUsers();
         register = new Register(registerRepository);
     })
 
     test('Deve registrar um usuário', async () => {
         const userData = {
             username: 'Raphael Galdino',
-            email: 'rapha@mail',
+            email: 'rapha123@mail',
             password: '123456'
         }
 

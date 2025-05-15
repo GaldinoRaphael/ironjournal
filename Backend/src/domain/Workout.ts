@@ -4,19 +4,19 @@ export class WorkoutSet {
     constructor(
         readonly id: string,
         readonly exercise: Exercise,
-        readonly weight: number,
+        readonly load: number,
         readonly reps: number,
         readonly type: string,
     ) { }
 
     static create(
         exercise: Exercise,
-        weight: number,
+        load: number,
         reps: number,
         type: string
     ) {
         const workoutSetId = crypto.randomUUID();
-        return new WorkoutSet(workoutSetId, exercise, weight, reps, type);
+        return new WorkoutSet(workoutSetId, exercise, load, reps, type);
     }
 }
 
@@ -26,7 +26,7 @@ export class Workout {
         readonly userId: string,
         readonly name: string,
         readonly description: string,
-        readonly workoutSet: WorkoutSet[],
+        readonly workoutSets: WorkoutSet[],
     ) { }
 
     static create(

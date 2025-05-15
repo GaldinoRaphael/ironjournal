@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx jest",
+    "test:coverage": "npx jest --coverage",
     "docker:up": "docker compose up -d",
     "docker:stop": "docker compose stop",
     "docker:clean": "docker compose rm -fsv"
